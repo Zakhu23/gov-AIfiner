@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GovAI Finder</title>
+
+<style>
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #333;
+}
+
+.navbar {
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 18px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.search-box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+input, select {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.02);
+}
+
+.grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.scheme { border-left: 6px solid #16a34a; }
+.exam { border-left: 6px solid #dc2626; }
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.footer {
+    margin-top: 40px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">🚀 GovAI Finder</div>
+
+<div class="container">
+
+<div class="search-box">
+<form method="POST">
+
+<div class="row">
+
+<input type="number" name="age" placeholder="Enter Age" required>
+<input type="number" name="income" placeholder="Annual Income" required>
+
+<select name="occupation">
+<option value="student">Student</option>
+<option value="farmer">Farmer</option>
+<option value="any">Any</option>
+</select>
+
+<select name="qualification">
+<option value="any">Any Qualification</option>
+<option value="10th pass">10th Pass</option>
+<option value="12th pass">12th Pass</option>
+<option value="graduate">Graduate</option>
+</select>
+
+<select name="state">
+
+<!-- ALL 28 STATES -->
+<option value="andhra pradesh">Andhra Pradesh</option>
+<option value="arunachal pradesh">Arunachal Pradesh</option>
+<option value="assam">Assam</option>
+<option value="bihar">Bihar</option>
+<option value="chhattisgarh">Chhattisgarh</option>
+<option value="goa">Goa</option>
+<option value="gujarat">Gujarat</option>
+<option value="haryana">Haryana</option>
+<option value="himachal pradesh">Himachal Pradesh</option>
+<option value="jharkhand">Jharkhand</option>
+<option value="karnataka">Karnataka</option>
+<option value="kerala">Kerala</option>
+<option value="madhya pradesh">Madhya Pradesh</option>
+<option value="maharashtra">Maharashtra</option>
+<option value="manipur">Manipur</option>
+<option value="meghalaya">Meghalaya</option>
+<option value="mizoram">Mizoram</option>
+<option value="nagaland">Nagaland</option>
+<option value="odisha">Odisha</option>
+<option value="punjab">Punjab</option>
+<option value="rajasthan">Rajasthan</option>
+<option value="sikkim">Sikkim</option>
+<option value="tamil nadu">Tamil Nadu</option>
+<option value="telangana">Telangana</option>
+<option value="tripura">Tripura</option>
+<option value="uttar pradesh">Uttar Pradesh</option>
+<option value="uttarakhand">Uttarakhand</option>
+<option value="west bengal">West Bengal</option>
+
+<!-- UNION TERRITORIES -->
+<option value="andaman and nicobar islands">Andaman & Nicobar Islands</option>
+<option value="chandigarh">Chandigarh</option>
+<option value="dadra and nagar haveli and daman and diu">Dadra & Nagar Haveli and Daman & Diu</option>
+<option value="delhi">Delhi</option>
+<option value="jammu and kashmir">Jammu & Kashmir</option>
+<option value="ladakh">Ladakh</option>
+<option value="lakshadweep">Lakshadweep</option>
+<option value="puducherry">Puducherry</option>
+
+<option value="all states">All States</option>
+
+</select>
+
+</div>
+
+<button type="submit">🔍 Find Best Schemes & Exams</button>
+
+</form>
+</div>
+
+{% if results %}
+<div class="grid">
+{% for r in results %}
+<div class="card {{ r[2] }}">
+<h3>{{ r[0] }}</h3>
+<p>{{ r[1] }}</p>
+<b>{{ r[2].upper() }}</b><br>
+<a href="{{ r[3] }}" target="_blank" class="btn">Apply Now</a>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+<div class="footer">
+Made with ❤️ | GovAI Project 2026
+</div>
+
+</div>
+
+</body>
+</html>
