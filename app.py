@@ -1,17 +1,13 @@
-from flask import Flask
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return """
-    <h1>GovAI Working ✅</h1>
-    <form method="POST" action="/result">
-        Age: <input type="number" name="age"><br><br>
-        <button type="submit">Submit</button>
-    </form>
-    """
+    results = []
 
-@app.route("/result", methods=["POST"])
-def result():
-    return "<h2>Form Submitted Successfully 🚀</h2>"
+    if request.method == "POST":
+        age = request.form.get("age")
+        results = [f"You entered age: {age}", "Working perfectly 🎉"]
+
+    return render_template("index.html", results=results)
