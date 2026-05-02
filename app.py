@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
+import os
 
-app = Flask(__name__)
+# 🔥 FORCE TEMPLATE PATH (THIS FIXES YOUR ERROR)
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
 
-@app.route("/", methods=["GET", "POST"])
+app = Flask(__name__, template_folder=template_dir)
+
+@app.route("/")
 def home():
-    results = []
+    return render_template("index.html")
 
-    if request.method == "POST":
-        age = request.form.get("age")
-        results = [f"You entered age: {age}", "Working perfectly 🎉"]
-
-    return render_template("index.html", results=results)
+if __name__ == "__main__":
+    app.run()
